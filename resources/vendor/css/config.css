@@ -1,0 +1,43 @@
+.slide-fade-enter{
+    transform: translateX(10px);
+    opacity: 0;
+}
+
+.slide-fade-enter-active,
+.slide-fade-leave-active{
+    transition: all 0.2s ease;
+}
+
+.slide-fade-leave-to{
+    transform: translateX(-10px);
+    opacity: 0;
+}
+
+.btnWidth{
+    width: 49% !important;
+}
+
+.el-select{
+    width: 100% !important;
+}
+
+.user-block{
+    list-style: none;
+}
+
+button:focus {
+    outline: 0px dotted !important;
+    outline: 0px auto -webkit-focus-ring-color !important;
+}
+
+.el-form-item--mini.el-form-item, .el-form-item--small.el-form-item {
+    margin-bottom: 0px !important;
+}
+.el-form-item__error {
+    top: 80% !important;
+    left: 10% !important;
+}
+
+.is-error{
+    padding-bottom: 10px !important;
+}

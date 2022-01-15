@@ -1,0 +1,138 @@
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// Variables
+@import 'variables';
+
+// Bootstrap
+@import '~bootstrap/scss/bootstrap';
+
+button:focus{
+    outline: 0 !important;
+}
+.v-data-table > .v-data-table__wrapper > table > tbody > tr > th,
+.v-data-table > .v-data-table__wrapper > table > thead > tr > th,
+.v-data-table > .v-data-table__wrapper > table > tfoot > tr > th {
+   font-size: 15px !important;
+}
+
+/* VUETIFY PARA LOS V-TEXTFIELD NO SE VEAN GIGANTES FUNCIONA CON LA CLASE INPUT_FORM */
+.v-text-field--outlined.v-input--dense.input_form.v-text-field--outlined > .v-input__control > .v-input__slot{
+    min-height: 20px !important;
+    font-size: 14px !important;
+}
+.input_form .v-label {
+    top: 6px !important;
+}
+.input_form .v-label {
+    font-size: 14px;
+}
+.input_form .v-input__icon {
+    height: 16px !important;
+}
+.input_form .v-messages{
+    font-size: 11px;
+    min-height: 0px !important;
+    text-align: right !important;
+
+}
+.input_form .v-text-field__details {
+    min-height: 0px !important;
+}
+.sub_header_form {
+    height: 30px !important;
+}
+.icons_formularios .v-icon.v-icon {
+    font-size: 16px;
+}
+
+.v-btn:not(.v-btn--round).button_add.v-size--default {
+    height: 38px !important;
+}
+
+.v-data-table-header th {
+    white-space: nowrap;
+}
+
+.v-data-table > .v-data-table__wrapper tbody tr.v-data-table__expanded__content {
+    box-shadow: none !important;
+}
+/* FIN VUETIFY PARA LOS V-TEXTFIELD NO SE VEAN GIGANTES FUNCIONA CON LA CLASE INPUT_FORM */
+
+/* VUETIFY V-CHECKBOX PONERLO CENTRADO AL CUADRITO */
+.v-input--selection-controls .v-input__slot > .v-label, .v-input--selection-controls .v-radio > .v-label {
+    top: 4px;
+}
+/* VUETIFY V-CHECKBOX PONERLO CENTRADO AL CUADRITO */
+
+/* VUETIFY V-SELECT */
+.v-select.v-text-field--outlined:not(.v-text-field--single-line).input_form_select.v-input--dense .v-select__selections {
+    padding: 0px 0 !important;
+}
+/* VUETIFY V-SELECT */
+
+html{
+     overflow-y: auto !important;
+}
+
+/* Boton cerrar sesión navbar */
+.boton_cerrar_sesion{
+    font-size: .9rem;
+    border-radius: 7px;
+    box-shadow: 0 0 0 1px rgba(34,36,38,.15) inset;
+}
+
+.boton_cerrar_sesion:hover{
+    border-radius: 7px;
+    background: #fff!important;
+    color: rgba(0,0,0,.8)!important;
+    box-shadow: 0 0 0 1px rgba(34,36,38,.35) inset, 0 0 0 0 rgba(34,36,38,.15) inset;
+}
+
+.boton_cerrar_sesion i{
+    position: relative;
+    top: 1px;
+}
+
+.p_logout{
+  font-size: .9rem;
+}
+
+.boton_cerrar_sesion{
+    font-size: .8rem !important;
+    border-radius: 7px;
+    box-shadow: 0 0 0 1px rgba(34,36,38,.15) inset;
+}
+
+.boton_cerrar_sesion:hover{
+    border-radius: 7px;
+    background: #fff!important;
+    color: rgba(0,0,0,.8)!important;
+    box-shadow: 0 0 0 1px rgba(34,36,38,.35) inset, 0 0 0 0 rgba(34,36,38,.15) inset;
+}
+
+.boton_cerrar_sesion i{
+    position: relative;
+    top: 1px;
+}
+/* Boton cerrar sesión navbar */
+
+/* Para el autocomplete de pedidos */
+.v-text-field.v-text-field--solo.v-input--dense.autocomplete_form_pedido>.v-input__control {
+    min-height: 32px !important;
+    font-size: 15px !important;
+}
+
+.v-text-field.v-text-field--solo.autocomplete_form_pedido .v-label {
+    font-size: 14px !important;
+}
+
+.v-text-field.v-text-field--solo:not(.v-text-field--solo-flat).autocomplete_form_pedido>.v-input__control>.v-input__slot {
+    box-shadow: none !important;
+    border: 1px solid !important;
+    color:rgba(0,0,0,.38) !important;
+}
+/* .v-text-field.v-text-field--solo:not(.v-text-field--solo-flat).autocomplete_form_pedido>.v-input__control>.v-input__slot:hover {
+    color: rgba(0,0,0,.86) !important;
+} */
+/* Para el autocomplete de pedidos */
