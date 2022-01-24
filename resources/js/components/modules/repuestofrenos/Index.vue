@@ -296,7 +296,6 @@ export default {
         },
 
         editRepuesto(item){
-            console.log(item);
             let me = this;
             me.dialog = true;
             me.editionmode = true;
@@ -342,7 +341,6 @@ export default {
         },
 
         deleteUser(item){
-            console.log(item);
             let me = this;
             me.$confirm('No podrás revertir esto!', '¿Está seguro?', {
                 confirmButtonText: 'Si, Eliminar',

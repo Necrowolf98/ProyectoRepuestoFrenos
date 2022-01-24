@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Marca\StoreRequest;
+use App\Http\Requests\Marca\UpdateRequest;
 use App\Models\Marca;
 use Illuminate\Http\Request;
 
@@ -59,7 +61,7 @@ class MarcaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
         $marca = new Marca();
         $marca->casa_marca = $request->casa_marca;
@@ -95,7 +97,7 @@ class MarcaController extends Controller
      * @param  \App\Models\Marca  $marca
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
         $marca = Marca::findOrFail($id);
         $marca->casa_marca = $request->casa_marca;

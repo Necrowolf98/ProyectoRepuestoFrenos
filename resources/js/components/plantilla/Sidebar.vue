@@ -22,9 +22,14 @@
             </div>
 
             <div class="user-panel mt-3 pb-3 mb-3 d-flex">
+                <div class="image" style="background: none !important">
+                    <a href="#" class="d-block" @click.prevent="logout">
+                        <i class="fas fa-sign-out-alt ml-3 mt-2"></i>
+                    </a>
+                </div>
+
                 <div class="info" style="background: none !important">
-                    <a href="#" class="d-block ml-2" @click.prevent="logout">
-                        <i class="fas fa-sign-out-alt"></i>
+                    <a href="#" class="d-block" @click.prevent="logout">
                         Cerrar sesión
                     </a>
                 </div>
@@ -92,13 +97,6 @@
                                 <p>Permisos</p>
                             </router-link>
                         </template>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">
-                            <i class="nav-icon fas fa-tachometer-alt"></i>
-                            <p>Profile</p>
-                        </a>
                     </li>
                 </ul>
             </nav>

@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Repuesto\StoreRequest;
+use App\Http\Requests\Repuesto\UpdateRequest;
 use App\Models\FrenoRepuesto;
 use Illuminate\Http\Request;
 use App\Models\RepuestoFreno;
@@ -68,7 +70,7 @@ class RepuestoFrenoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
         try{
             DB::beginTransaction();
@@ -122,7 +124,7 @@ class RepuestoFrenoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
 
             $repuesto = RepuestoFreno::findOrFail($id);

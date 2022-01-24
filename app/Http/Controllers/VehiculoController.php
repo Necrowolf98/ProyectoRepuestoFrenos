@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Vehiculo\StoreRequest;
+use App\Http\Requests\Vehiculo\UpdateRequest;
 use App\Models\Marca;
 use App\Models\Vehiculo;
 use Illuminate\Http\Request;
@@ -73,7 +75,7 @@ class VehiculoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
         $vehiculo = new Vehiculo();
 
@@ -113,7 +115,7 @@ class VehiculoController extends Controller
      * @param  \App\Models\Vehiculo  $vehiculo
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(UpdateRequest $request, $id)
     {
         $vehiculo = Vehiculo::findOrFail($id);
         $vehiculo->repuestofreno_id = $request->repuestofreno_id;

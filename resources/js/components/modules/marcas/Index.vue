@@ -100,7 +100,7 @@
                                     <v-subheader class="sub_header_form float-right mx-0 px-0">Nombre:</v-subheader>
                                 </v-col>
                                 <v-col sm="8" md="9" lg="9" xl="9" class="my-0 py-0">
-                                    <v-text-field v-model="form.casa_marca" label="Escriba el nombre de la marca" append-icon="fas fa-car" dense outlined class="input_form icons_formularios my-0 py-0" :error-messages="errors.casa_marca" hint="Por ejemplo, 10210">
+                                    <v-text-field v-model="form.casa_marca" label="Escriba el nombre de la marca" append-icon="fas fa-car" dense outlined class="input_form icons_formularios my-0 py-0" :error-messages="errors.casa_marca" hint="Por ejemplo, Chevrolet">
                                     </v-text-field>
                                 </v-col>
                             </v-row>
@@ -229,7 +229,6 @@ export default {
         },
 
         editMarca(item){
-            console.log(item);
             let me = this;
             me.dialog = true;
             me.editionmode = true;
@@ -263,7 +262,6 @@ export default {
         },
 
         deleteUser(item){
-            console.log(item);
             let me = this;
             me.$confirm('No podrás revertir esto!', '¿Está seguro?', {
                 confirmButtonText: 'Si, Eliminar',

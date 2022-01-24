@@ -260,7 +260,6 @@ export default {
         },
 
         editUser(item){
-            console.log(item);
             let me = this;
             me.dialog = true;
             me.editionmode = true;
@@ -300,7 +299,6 @@ export default {
         },
 
         deleteRegistro(item){
-            console.log(item);
             let me = this;
             me.$confirm('No podrás revertir esto!', '¿Está seguro?', {
                 confirmButtonText: 'Si, Eliminar',
