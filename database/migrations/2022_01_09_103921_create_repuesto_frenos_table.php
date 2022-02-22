@@ -16,8 +16,7 @@ class CreateRepuestoFrenosTable extends Migration
         Schema::create('repuesto_frenos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('codigo');
-            $table->string('descripcion');
-            $table->string('compatibilidad');
+            $table->string('descripcion')->nullable();
             $table->timestamps();
         });
     }

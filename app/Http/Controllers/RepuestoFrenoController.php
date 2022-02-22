@@ -20,7 +20,7 @@ class RepuestoFrenoController extends Controller
     public function index(Request $request)
     {
         $repuesto = RepuestoFreno::join('descripcion_repuestos', 'descripcion_repuestos.repuestofreno_id', '=', 'repuesto_frenos.id')
-        ->select('repuesto_frenos.id', 'repuesto_frenos.codigo', 'repuesto_frenos.descripcion', 'repuesto_frenos.compatibilidad', 'descripcion_repuestos.id as descripcion_id', 'descripcion_repuestos.repuestofreno_id', 'descripcion_repuestos.clase', 'descripcion_repuestos.medidas', 'descripcion_repuestos.posicion');
+        ->select('repuesto_frenos.id', 'repuesto_frenos.codigo', 'repuesto_frenos.descripcion', 'descripcion_repuestos.id as descripcion_id', 'descripcion_repuestos.repuestofreno_id', 'descripcion_repuestos.clase', 'descripcion_repuestos.medidas', 'descripcion_repuestos.posicion');
 
         if($request->has('sortBy')){
             if($request->get('sortDesc') === 'true'){
@@ -39,16 +39,24 @@ class RepuestoFrenoController extends Controller
         }
 
         $search = $request->get('search');
+        $tipo_clase = $request->get('tipo_clase');
 
-        $repuesto = $repuesto->where('repuesto_frenos.codigo', 'LIKE', "%$search%")
-        ->orWhere('repuesto_frenos.compatibilidad', 'LIKE', "%$search%")
-        ->orWhere('repuesto_frenos.descripcion', 'LIKE', "%$search%")
-        ->orWhere('descripcion_repuestos.clase', 'LIKE', "%$search%")
-        ->orWhere('descripcion_repuestos.medidas', 'LIKE', "%$search%")
-        ->orWhere('descripcion_repuestos.posicion', 'LIKE', "%$search%")
-        ->orderBy('repuesto_frenos.id', 'desc')
+
+        $repuesto = $repuesto->where([
+            ['descripcion_repuestos.clase', $tipo_clase],
+            ['repuesto_frenos.codigo', 'LIKE', "%$search%"]
+        ])->orWhere([
+            ['descripcion_repuestos.clase', $tipo_clase],
+            ['descripcion_repuestos.medidas', 'LIKE', "%$search%"]
+        ])->orWhere([
+            ['descripcion_repuestos.clase', $tipo_clase],
+            ['repuesto_frenos.descripcion', 'LIKE', "%$search%"]
+        ])->orWhere([
+            ['descripcion_repuestos.clase', $tipo_clase],
+            ['descripcion_repuestos.posicion', 'LIKE', "%$search%"]
+        ])->orderBy('repuesto_frenos.id', 'desc')
         ->paginate($itemsPerPage);
-
+        
         return [
             'repuesto' => $repuesto
         ];
@@ -77,9 +85,9 @@ class RepuestoFrenoController extends Controller
             $repuesto = new RepuestoFreno();
             $repuesto->codigo = $request->codigo;
             $repuesto->descripcion = $request->descripcion;
-            $repuesto->compatibilidad = $request->compatibilidad;
             $repuesto->save();
 
+                
             $freno_repuesto = new FrenoRepuesto();
             $freno_repuesto->repuestofreno_id = $repuesto->id;
             $freno_repuesto->clase = $request->clase;
@@ -130,7 +138,6 @@ class RepuestoFrenoController extends Controller
             $repuesto = RepuestoFreno::findOrFail($id);
             $repuesto->codigo = $request->codigo;
             $repuesto->descripcion = $request->descripcion;
-            $repuesto->compatibilidad = $request->compatibilidad;
             $repuesto->save();
 
             $freno_repuesto = FrenoRepuesto::findOrFail($request->descripcion_id);

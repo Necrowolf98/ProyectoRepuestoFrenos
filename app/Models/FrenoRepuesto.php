@@ -14,7 +14,7 @@ class FrenoRepuesto extends Model
     protected $fillable = [
         'repuestofreno_id',
         'clase',
-        'medidas',
-        'posicion'
+        'posicion',
+        'medidas'
     ];
 }

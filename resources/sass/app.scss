@@ -1,11 +1,11 @@
-// Fonts
+/* // Fonts
 @import url('https://fonts.googleapis.com/css?family=Nunito');
 
 // Variables
 @import 'variables';
 
 // Bootstrap
-@import '~bootstrap/scss/bootstrap';
+@import '~bootstrap/scss/bootstrap'; */
 
 button:focus{
     outline: 0 !important;
@@ -136,3 +136,18 @@ html{
     color: rgba(0,0,0,.86) !important;
 } */
 /* Para el autocomplete de pedidos */
+
+
+.login-page{
+    background: url('http://importbrands.test/img/Logoimpor.png') no-repeat center top !important;
+}
+
+.login-box .avatar {
+    width: 260px;
+    height: 90px;
+    border-radius: 50%;
+    position: absolute;
+    top: -10px;
+    left: calc(27% - 50px);
+  }
+  

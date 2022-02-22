@@ -21,7 +21,7 @@ class VehiculoController extends Controller
         $vehiculo = Vehiculo::join('repuesto_frenos', 'repuesto_frenos.id', '=', 'vehiculos.repuestofreno_id')
         ->join('descripcion_repuestos', 'descripcion_repuestos.repuestofreno_id', '=', 'repuesto_frenos.id')
         ->join('marcas', 'marcas.id', '=', 'vehiculos.casa_marca_id')
-        ->select('vehiculos.id', 'vehiculos.modelo', 'vehiculos.anio_vehiculo', 'vehiculos.repuestofreno_id', 'vehiculos.casa_marca_id', 'marcas.casa_marca', 'repuesto_frenos.id as id_repuestofreno', 'repuesto_frenos.codigo', 'repuesto_frenos.descripcion', 'repuesto_frenos.compatibilidad', 'descripcion_repuestos.id as id_descripcionrepuesto', 'descripcion_repuestos.repuestofreno_id','descripcion_repuestos.clase', 'descripcion_repuestos.medidas', 'descripcion_repuestos.posicion');
+        ->select('vehiculos.id', 'vehiculos.modelo', 'vehiculos.anio_vehiculo', 'vehiculos.repuestofreno_id', 'vehiculos.casa_marca_id', 'marcas.casa_marca', 'repuesto_frenos.id as id_repuestofreno', 'repuesto_frenos.codigo', 'repuesto_frenos.descripcion', 'descripcion_repuestos.id as id_descripcionrepuesto', 'descripcion_repuestos.repuestofreno_id','descripcion_repuestos.clase', 'descripcion_repuestos.medidas', 'descripcion_repuestos.posicion');
 
         if($request->has('sortBy')){
             if($request->get('sortDesc') === 'true'){
@@ -40,17 +40,30 @@ class VehiculoController extends Controller
         }
 
         $search = $request->get('search');
+        $tipo_clase = $request->get('tipo_clase');
 
-        $vehiculo = $vehiculo->where('marcas.casa_marca', 'LIKE', "%$search%")
-        ->orWhere('vehiculos.modelo', 'LIKE', "%$search%")
-        ->orWhere('vehiculos.anio_vehiculo', 'LIKE', "%$search%")
-        ->orWhere('repuesto_frenos.codigo', 'LIKE', "%$search%")
-        ->orWhere('repuesto_frenos.compatibilidad', 'LIKE', "%$search%")
-        ->orWhere('repuesto_frenos.descripcion', 'LIKE', "%$search%")
-        ->orWhere('descripcion_repuestos.clase', 'LIKE', "%$search%")
-        ->orWhere('descripcion_repuestos.medidas', 'LIKE', "%$search%")
-        ->orWhere('descripcion_repuestos.posicion', 'LIKE', "%$search%")
-        ->orderBy('vehiculos.id', 'desc')
+        $vehiculo = $vehiculo->where([
+            ['descripcion_repuestos.clase', $tipo_clase],
+            ['marcas.casa_marca', 'LIKE', "%$search%"]
+        ])->orWhere([
+            ['descripcion_repuestos.clase', $tipo_clase],
+            ['vehiculos.modelo', 'LIKE', "%$search%"]
+        ])->orWhere([
+            ['descripcion_repuestos.clase', $tipo_clase],
+            ['vehiculos.anio_vehiculo', 'LIKE', "%$search%"]
+        ])->orWhere([
+            ['descripcion_repuestos.clase', $tipo_clase],
+            ['repuesto_frenos.codigo', 'LIKE', "%$search%"]
+        ])->orWhere([
+            ['descripcion_repuestos.clase', $tipo_clase],
+            ['repuesto_frenos.descripcion', 'LIKE', "%$search%"]
+        ])->orWhere([
+            ['descripcion_repuestos.clase', $tipo_clase],
+            ['descripcion_repuestos.medidas', 'LIKE', "%$search%"]
+        ])->orWhere([
+            ['descripcion_repuestos.clase', $tipo_clase],
+            ['descripcion_repuestos.posicion', 'LIKE', "%$search%"]
+        ])->orderBy('repuesto_frenos.id', 'desc')
         ->paginate($itemsPerPage);
 
         return [

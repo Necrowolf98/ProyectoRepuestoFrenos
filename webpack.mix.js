@@ -1,17 +1,5 @@
 const mix = require('laravel-mix');
 
-/* ESTO ES CUANDO QUIERO IMPORTAR TODO EL VUETIFY */
-const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin');
-
-    var webpackConfig = {
-        plugins: [
-            new VuetifyLoaderPlugin(),
-        ]
-    }
-
-    mix.webpackConfig(webpackConfig);
-
-
  mix.styles([
     'resources/vendor/css/all.min.css',
     'resources/vendor/css/adminlte.min.css',
@@ -27,4 +15,4 @@ const VuetifyLoaderPlugin = require('vuetify-loader/lib/plugin');
 'resources/vendor/js/jquery.overlayScrollbars.min.js',
 ], 'public/js/plantilla.js')
 .copy('resources/vendor/fontawesome/webfonts', 'public/webfonts')
-.browserSync('http://proyectlist.test/');
+.browserSync('http://importbrands.test/');

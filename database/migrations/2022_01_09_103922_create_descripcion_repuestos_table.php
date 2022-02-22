@@ -19,9 +19,9 @@ class CreateDescripcionRepuestosTable extends Migration
             $table->unsignedBigInteger('repuestofreno_id');
             $table->foreign('repuestofreno_id')->references('id')->on('repuesto_frenos')->onDelete('cascade');
 
-            $table->string('clase');
-            $table->string('medidas');
-            $table->string('posicion');
+            $table->enum('clase', ['PF', 'C', 'POM', 'RPF', 'PEM']);
+            $table->string('posicion')->nullable();
+            $table->string('medidas')->nullable();
             $table->timestamps();
         });
     }

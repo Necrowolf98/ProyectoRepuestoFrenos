@@ -26,10 +26,9 @@ class UpdateRequest extends FormRequest
         return [
             'codigo' => 'required',
             'descripcion' => 'required',
-            'compatibilidad' => 'required',
             'clase' => 'required',
-            'medidas' => 'required',
-            'posicion' => 'required'
+            'posicion' => ($this->clase == 'PF' ? 'required' : 'nullable'),
+            'medidas' => ($this->clase == 'C' || $this->clase == 'PEM' ? 'required' : 'nullable')
         ];
     }
 
@@ -38,7 +37,6 @@ class UpdateRequest extends FormRequest
         return [
             'codigo.required' => 'El campo código es requerido',
             'descripcion.required' => 'El campo descripción es requerido',
-            'compatibilidad.required' => 'El campo compatibilidad es requerido',
             'clase.required' => 'El campo clase es requerido',
             'medidas.required' => 'El campo medida es requerido',
             'posicion.required' => 'El campo tipo de posición es requerido',

@@ -11,7 +11,7 @@ class Marca extends Model
     use HasFactory;
 
     protected $fillable = [
-        'casa_marca'
+        'casa_marca',
     ];
 
 

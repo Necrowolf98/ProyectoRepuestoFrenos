@@ -16,6 +16,20 @@
                         outlined>
                         </v-text-field>
 
+                        <v-col cols="4" md="3" lg="3" xl="3" class="py-0 my-0">
+                            <v-select
+                            class="select_search"
+                            v-model="tipo_clase"
+                            :items="clases"
+                            item-value="item"
+                            @change="getListarRepuestos"
+                            label="Seleccione una clase"
+                            dense
+                            hide-details
+                            outlined>
+                            </v-select>
+                        </v-col>
+
                         <template v-if="permissionsAuthUser.includes('repuesto.create')">
                             <v-btn color="primary" class="ml-2 button_add d-none d-sm-none d-md-flex" @click="openModal">
                                 AGREGAR REPUESTO<v-icon class="ml-1">mdi-arrow-right</v-icon>
@@ -38,7 +52,8 @@
             <v-data-table
             item-key="id"
             class="elevation-1"
-            :headers="headers"
+            :headers='(tipo_clase == "PF") ? headersPastillaFreno :
+             (tipo_clase == "C" || tipo_clase == "PEM") ? headersCaliper : headersPernoMordaza'
             :header-props="{ sortByText: 'Ordenar por' }"
             :items="ContenedorRepuestos"
             :options.sync="options"
@@ -56,11 +71,9 @@
             }">
 
 
-                <template v-slot:[`item.roles.name`]="{ item }">
+                <template v-slot:[`item.clase`]="{ item }">
                     <div class="d-flex flex-column">
-                        <span v-for="(role, index) in item.roles" :key="index">
-                            {{ role.name }}
-                        </span>
+                        {{ (item.clase == 'PF') ? 'Pastilla de frenos' : (item.clase == 'C') ? 'Caliper' : (item.clase == 'POM') ? 'Perno de Mordaza' : (item.clase == 'RPF') ? 'Regulación de Pastilla Freno' : 'Pistones de Mordaza' }}
                     </div>
                 </template>
 
@@ -95,6 +108,17 @@
                 <v-card-text class="mt-4 pb-0">
                     <v-form class="mt-2">
                         <v-container>
+                            <v-row>
+                                <v-col sm="4" md="3" lg="3" xl="3" class="my-0 py-0 px-0">
+                                    <v-subheader class="sub_header_form float-right mx-0 px-0">Clase:</v-subheader>
+                                </v-col>
+                                <v-col sm="8" md="9" lg="9" xl="9" class="my-0 py-0">
+                                    <v-select v-model="form.clase" label="Seleccione un tipo de clase" :items="clases"
+                                    item-text="text" item-value="item" clearable dense outlined append-icon="far fa-list-alt" class="input_form icons_formularios input_form_select my-0 py-0"
+                                    :error-messages="errors.clase">
+                                    </v-select>
+                                </v-col>
+                            </v-row>
 
                             <v-row>
                                 <v-col sm="4" md="3" lg="3" xl="3" class="my-0 py-0 px-0">
@@ -116,27 +140,7 @@
                                 </v-col>
                             </v-row>
 
-                            <v-row>
-                                <v-col sm="4" md="3" lg="3" xl="3" class="my-0 py-0 px-0">
-                                    <v-subheader class="sub_header_form float-right mx-0 px-0">Compatibilidad:</v-subheader>
-                                </v-col>
-                                <v-col sm="8" md="9" lg="9" xl="9" class="my-0 py-0">
-                                    <v-text-field v-model="form.compatibilidad" label="Escriba la compatibilidad" append-icon="fas fa-list" dense outlined class="input_form icons_formularios my-0 py-0" :error-messages="errors.compatibilidad" hint="Por ejemplo, compatibilidad A">
-                                    </v-text-field>
-                                </v-col>
-                            </v-row>
-
-                            <v-row>
-                                <v-col sm="4" md="3" lg="3" xl="3" class="my-0 py-0 px-0">
-                                    <v-subheader class="sub_header_form float-right mx-0 px-0">Clase:</v-subheader>
-                                </v-col>
-                                <v-col sm="8" md="9" lg="9" xl="9" class="my-0 py-0">
-                                    <v-text-field v-model="form.clase" label="Escriba la clase" append-icon="fas fa-list" dense outlined class="input_form icons_formularios my-0 py-0" :error-messages="errors.clase" hint="Por ejemplo, clase A">
-                                    </v-text-field>
-                                </v-col>
-                            </v-row>
-
-                            <v-row>
+                            <v-row v-show="form.clase == 'C' || form.clase == 'PEM'">
                                 <v-col sm="4" md="3" lg="3" xl="3" class="my-0 py-0 px-0">
                                     <v-subheader class="sub_header_form float-right mx-0 px-0">Medidas:</v-subheader>
                                 </v-col>
@@ -146,7 +150,7 @@
                                 </v-col>
                             </v-row>
 
-                            <v-row>
+                            <v-row v-show="form.clase == 'PF'">
                                 <v-col sm="4" md="3" lg="3" xl="3" class="my-0 py-0 px-0">
                                     <v-subheader class="sub_header_form float-right mx-0 px-0">Tipo de posición:</v-subheader>
                                 </v-col>
@@ -190,17 +194,26 @@ export default {
         return {
 
             search: '',
+            tipo_clase: 'PF',
 
             form: {
                 id: '',
                 codigo: '',
                 descripcion: '',
-                compatibilidad: '',
                 clase: '',
                 medidas: '',
                 posicion: '',
                 descripcion_id: ''
             },
+
+            clases: [
+                {item: 'PF', text: 'Pastillas de freno'},
+                {item: 'C', text: 'Caliper'},
+                {item: 'POM', text: 'Perno de Mordaza'},
+                {item: 'RPF', text: 'Regulación de Pastilla Freno'},
+                {item: 'PEM', text: 'Pistones de Mordaza'}
+
+            ],
 
             tipo_posicion: [
                 {item: 'Delantera', text: 'Delantera'},
@@ -208,15 +221,29 @@ export default {
             ],
 
 
-            headers: [
+            headersPastillaFreno: [
                 {text: 'Código', value: 'codigo'},
                 {text: 'Descripción', value: 'descripcion'},
-                {text: 'Compatibilidad', value: 'compatibilidad'},
-                {text: 'Clase', value: 'clase'},
-                {text: 'Medidas', value: 'medidas'},
+                {text: 'Clase', value: 'clase', sortable: false},
                 {text: 'Posición', value: 'posicion'},
                 {text: 'Acciones', value: 'id', sortable: false},
             ],
+
+            headersCaliper: [
+                {text: 'Código', value: 'codigo'},
+                {text: 'Descripción', value: 'descripcion'},
+                {text: 'Clase', value: 'clase', sortable: false},
+                {text: 'Medidas', value: 'medidas'},                
+                {text: 'Acciones', value: 'id', sortable: false}
+            ],
+
+            headersPernoMordaza: [
+                {text: 'Código', value: 'codigo'},
+                {text: 'Descripción', value: 'descripcion'},
+                {text: 'Clase', value: 'clase', sortable: false},
+                {text: 'Acciones', value: 'id', sortable: false},
+            ],
+
 
             ContenedorRepuestos: [],
             editionmode: false,
@@ -251,6 +278,7 @@ export default {
                     page: page,
                     itemsPerPage: itemsPerPage,
                     search: me.search,
+                    tipo_clase: me.tipo_clase
                 }
             }).then(response => {
                 me.ContenedorRepuestos = response.data.repuesto.data;
@@ -271,7 +299,6 @@ export default {
             axios.post('/api/repuestofrenos', {
                 'codigo': me.form.codigo,
                 'descripcion': me.form.descripcion,
-                'compatibilidad': me.form.compatibilidad,
                 'clase': me.form.clase,
                 'medidas': me.form.medidas,
                 'posicion': me.form.posicion,
@@ -302,7 +329,6 @@ export default {
             me.form.id = item.id;
             me.form.codigo = item.codigo;
             me.form.descripcion = item.descripcion;
-            me.form.compatibilidad = item.compatibilidad;
             me.form.clase = item.clase;
             me.form.medidas = item.medidas;
             me.form.posicion = item.posicion;
@@ -315,7 +341,6 @@ export default {
             axios.put('/api/repuestofrenos/'+ me.form.id, {
                 'codigo': me.form.codigo,
                 'descripcion': me.form.descripcion,
-                'compatibilidad': me.form.compatibilidad,
                 'clase': me.form.clase,
                 'medidas': me.form.medidas,
                 'posicion': me.form.posicion,
@@ -405,7 +430,6 @@ export default {
             me.form.id = null;
             me.form.codigo = null;
             me.form.descripcion = null;
-            me.form.compatibilidad = null;
             me.form.clase = null;
             me.form.medidas = null;
             me.form.posicion = null;

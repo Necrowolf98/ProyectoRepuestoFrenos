@@ -11,7 +11,6 @@ class RepuestoFreno extends Model
 
     protected $fillable = [
         'codigo',
-        'descripcion',
-        'compatibilidad'
+        'descripcion'
     ];
 }

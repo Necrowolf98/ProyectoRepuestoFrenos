@@ -1,4 +1,4 @@
-<template>
+<template> 
     <div>
         <v-card outlined>
             <v-card-title class="pb-0 mb-0 grey lighten-4">
@@ -15,6 +15,20 @@
                         hide-details
                         outlined>
                         </v-text-field>
+
+                        <v-col cols="4" md="3" lg="3" xl="3" class="py-0 my-0">
+                            <v-select
+                            class="select_search"
+                            v-model="tipo_clase"
+                            :items="clases"
+                            item-value="item"
+                            @change="getListarPiezas"
+                            label="Seleccione una clase"
+                            dense
+                            hide-details
+                            outlined>
+                            </v-select>
+                        </v-col>
 
                         <template v-if="permissionsAuthUser.includes('dashboard.create')">
                             <v-btn color="primary" class="ml-2 button_add d-none d-sm-none d-md-flex" @click="openModal">
@@ -38,7 +52,8 @@
             <v-data-table
             item-key="id"
             class="elevation-1"
-            :headers="headers"
+            :headers='(tipo_clase == "PF") ? headersPastillaFreno :
+             (tipo_clase == "C" || tipo_clase == "PEM") ? headersCaliper : headersPernoMordaza'
             :header-props="{ sortByText: 'Ordenar por' }"
             :items="ContenedorRegistros"
             :options.sync="options"
@@ -56,6 +71,12 @@
             }">
 
 
+                <template v-slot:[`item.clase`]="{ item }">
+                    <div class="d-flex flex-column">
+                        {{ (item.clase == 'PF') ? 'Pastilla de frenos' : (item.clase == 'C') ? 'Caliper' : (item.clase == 'POM') ? 'Perno de Mordaza' : (item.clase == 'RPF') ? 'Regulación de Pastilla Freno' : 'Pistones de Mordaza' }}
+                    </div>
+                </template>
+                
                 <template v-slot:[`item.id`]="{ item }">
                     <v-tooltip bottom>
                         <template v-if="permissionsAuthUser.includes('dashboard.edit')" v-slot:activator="{ on, attrs }">
@@ -93,7 +114,7 @@
                                 </v-col>
                                 <v-col sm="8" md="9" lg="9" xl="9" class="my-0 py-0">
                                     <v-select v-model="form.repuestofreno_id" label="Seleccione el tipo de repuesto" :items="ContenedorRepuestos"
-                                    :item-text="item =>`${item.codigo} - ${item.descripcion} - ${item.compatibilidad}`" item-value="id" clearable dense outlined append-icon="far fa-list-alt" class="input_form icons_formularios input_form_select my-0 py-0"
+                                    :item-text="item =>`${item.codigo} - ${item.descripcion}`" item-value="id" clearable dense outlined append-icon="far fa-list-alt" class="input_form icons_formularios input_form_select my-0 py-0"
                                     :error-messages="errors.repuestofreno_id" hint="Por ejemplo, d1475d" >
                                     </v-select>
                                 </v-col>
@@ -157,6 +178,7 @@ export default {
         return {
 
             search: '',
+            tipo_clase: 'PF',
 
             form: {
                 id: '',
@@ -167,16 +189,43 @@ export default {
             },
 
 
-            headers: [
+            clases: [
+                {item: 'PF', text: 'Pastillas de freno'},
+                {item: 'C', text: 'Caliper'},
+                {item: 'POM', text: 'Perno de Mordaza'},
+                {item: 'RPF', text: 'Regulación de Pastilla Freno'},
+                {item: 'PEM', text: 'Pistones de Mordaza'}
+            ],
+
+            headersPastillaFreno: [
                 {text: 'Casa Marca', value: 'casa_marca'},
                 {text: 'Modelo', value: 'modelo'},
                 {text: 'Año', value: 'anio_vehiculo'},
                 {text: 'Código', value: 'codigo'},
-                {text: 'Clase', value: 'clase'},
-                {text: 'Medidas', value: 'medidas'},
-                {text: 'Posicion', value: 'posicion'},
                 {text: 'Descripción', value: 'descripcion'},
-                {text: 'Compatibilidad', value: 'compatibilidad'},
+                {text: 'Clase', value: 'clase'},
+                {text: 'Posición', value: 'posicion'},
+                {text: 'Acciones', value: 'id', sortable: false},
+            ],
+
+            headersCaliper: [
+                {text: 'Casa Marca', value: 'casa_marca'},
+                {text: 'Modelo', value: 'modelo'},
+                {text: 'Año', value: 'anio_vehiculo'},
+                {text: 'Código', value: 'codigo'},
+                {text: 'Descripción', value: 'descripcion'},
+                {text: 'Clase', value: 'clase'},
+                {text: 'Medidas', value: 'medidas'},                
+                {text: 'Acciones', value: 'id', sortable: false}
+            ],
+
+            headersPernoMordaza: [
+                {text: 'Casa Marca', value: 'casa_marca'},
+                {text: 'Modelo', value: 'modelo'},
+                {text: 'Año', value: 'anio_vehiculo'},
+                {text: 'Código', value: 'codigo'},
+                {text: 'Descripción', value: 'descripcion'},
+                {text: 'Clase', value: 'clase'},
                 {text: 'Acciones', value: 'id', sortable: false},
             ],
 
@@ -215,6 +264,7 @@ export default {
                     page: page,
                     itemsPerPage: itemsPerPage,
                     search: me.search,
+                    tipo_clase: me.tipo_clase
                 }
             }).then(response => {
                 me.ContenedorRegistros = response.data.vehiculo.data;
