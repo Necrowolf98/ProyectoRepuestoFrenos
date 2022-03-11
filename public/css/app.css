@@ -145,7 +145,7 @@ html {
 } */
 /* Para el autocomplete de pedidos */
 .login-page {
-  background: url("http://importbrands.test/img/Logoimpor.png") no-repeat center top !important;
+  background: url("/img/Logoimpor.png") no-repeat center top !important;
 }
 
 .login-box .avatar {

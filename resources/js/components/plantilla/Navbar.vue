@@ -1,5 +1,5 @@
 <template>
-        <nav class="main-header navbar navbar-expand navbar-white navbar-light">
+        <nav class="main-header navbar navbar-expand navbar-warning navbar-light">
             <!-- Left navbar links -->
             <ul class="navbar-nav pl-0">
 

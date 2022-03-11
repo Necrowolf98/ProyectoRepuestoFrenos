@@ -1,5 +1,5 @@
 <template>
-    <aside class="main-sidebar sidebar-dark-primary elevation-4">
+    <aside class="main-sidebar sidebar-dark-warning elevation-4">
         <!-- Brand Logo -->
         <a href="#" class="brand-link">
             <img src="/img/Logoimpor.png" alt="Sistema Laravel y Vue" class="brand-image img-circle elevation-3" style="opacity: .8">
